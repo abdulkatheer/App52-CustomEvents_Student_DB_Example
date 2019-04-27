@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="org.katheer"/>
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/spring"/>
+        <property name="username" value="root"/>
+        <property name="password" value="katheer"/>
+    </bean>
+
+    <bean id="studentValidator"
+          class="org.katheer.validator.StudentValidator">
+        <property name="resource"
+                  value="classpath:org/katheer/validator/errors.properties"/>
+    </bean>
+
+    <!-- Custom Events -->
+    <bean id="createEventPublisher" class="org.katheer.event.create.StudentCreateEventPublisher"/>
+    <bean id="createEventListener" class="org.katheer.event.create.StudentCreateEventListener"/>
+
+    <bean id="deleteEventPublisher" class="org.katheer.event.delete.StudentDeleteEventPublisher"/>
+    <bean id="deleteEventListener" class="org.katheer.event.delete.StudentDeleteEventListener"/>
+
+    <bean id="searchEventPublisher" class="org.katheer.event.search.StudentSearchEventPublisher"/>
+    <bean id="searchEventListener" class="org.katheer.event.search.StudentSearchEventListener"/>
+
+    <bean id="updateEventPublisher" class="org.katheer.event.update.StudentUpdateEventPublisher"/>
+    <bean id="updateEventListener" class="org.katheer.event.update.StudentUpdateEventListener"/>
+</beans>
